@@ -43,10 +43,29 @@ describe('Project Parser', () => {
 
     });
 
-    it('Can understand missng efforts (and default them to mediums)', () => {
+    it('Doesn;t even need a Hyphen', () => {
+        const output = ProjectParser.fromString("No Hyphen XL");
+
+        expect(output).toMatchObject({name:"No Hyphen", effort: Effort.XLARGE});
+
+    });
+    it('Doesn;t even need a Hyphen for numbers', () => {
+        const output = ProjectParser.fromString("Spaced Number 23");
+
+        expect(output).toMatchObject({name:"Spaced Number", effort: { days: 23}});
+
+    });
+    it('Can be tabbed', () => {
+        const output = ProjectParser.fromString("Tabbed\tXL");
+
+        expect(output).toMatchObject({name:"Tabbed", effort: Effort.XLARGE});
+
+    });
+
+    it('Can understand missing efforts (and default them to mediums)', () => {
         const output = ProjectParser.fromString("Missing effort - ");
 
-        expect(output).toMatchObject({name:"Missing effort", effort: Effort.MEDIUM});
+        expect(output).toMatchObject({name:"Missing effort -", effort: Effort.MEDIUM});
 
     });
 });

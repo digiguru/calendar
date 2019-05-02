@@ -3,7 +3,7 @@ import './App.css';
 import {PeopleProject} from './views/PeopleProject/PeopleProject';
 import {Project} from './views/ProjectDetails/Project';
 import ls from 'local-storage';
-import {defaults} from './defaults/defaultModels';
+import {Defaults} from './defaults/DefaultProjects';
 class App extends Component {
   constructor(props) {
     super(props);
@@ -13,12 +13,12 @@ class App extends Component {
     };
   }
   setupDefaultProjectUsers() {
-    ls.set('projectUsers', defaults.projectUsers);
-    return defaults.projectUsers;
+    ls.set('projectUsers', Defaults.ProjectUsers);
+    return Defaults.ProjectUsers;
   }
   setupDefaultProjects() {
-    ls.set('projects', defaults.projects);
-    return defaults.projects;
+    ls.set('projects', Defaults.Projects);
+    return Defaults.Projects;
   }
   componentDidMount() {
     let projectUsers = ls.get('projectUsers'),
