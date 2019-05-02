@@ -114,7 +114,9 @@ export class TeamSlider extends Component {
         const saveableSTate = this.getState(e);
         console.log("Loading ", e, saveableSTate);
 
-        this.setState({ ...saveableSTate});
+        this.setState((state, props) => {
+            return { state, ...saveableSTate}
+        });
     }
     render() {
         
@@ -128,7 +130,7 @@ export class TeamSlider extends Component {
             <TabSet tabs={this.state.projectNames} activeTab={this.state.activeProject} handleChangeTab={this.handleChangeTab} />
           </header>
           <main>
-            <TeamSliderForm project={this.state.project} activeProject={this.state.activeProject} handleSave={this.handleSave} handleChange={this.handleChange} />
+            <TeamSliderForm project={this.state.project} activeProject={this.state.activeProject} handleSaveAs={this.handleSaveAs} handleSave={this.handleSave} handleChange={this.handleChange} />
             <h1>Output</h1>
 
            
