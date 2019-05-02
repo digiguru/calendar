@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { FormRowSlider } from "./FormElements/FormRowSlider";
-import { FormRowOptions } from "./FormElements/FormRowOptions";
-import { FormRowTextArea, FormColapsedTextArea } from "./FormElements/FormRowTextArea";
+import { FormColapsedTextArea } from "./FormElements/FormRowTextArea";
 import { FormRowInput } from "./FormElements/FormRowInput";
 import { TeamCost } from '../logic/TeamCost';
 import { TeamDelivery } from '../logic/TeamDelivery';
 import { ProjectParser } from "../logic/ProjectParser";
 import { Defaults } from '../defaults/DefaultTeamSlider';
 import { TabSet } from './SaveArea/SaveArea';
+import { TeamSliderForm } from './TeamSlider/TeamSliderForm'
 import ls from 'local-storage';
 
 export class TeamSlider extends Component {
@@ -129,24 +128,7 @@ export class TeamSlider extends Component {
             <TabSet tabs={this.state.projectNames} activeTab={this.state.activeProject} handleChangeTab={this.handleChangeTab} />
           </header>
           <main>
-          <form>
-                <h1>Input</h1>
-                <FormRowSlider id="teamsize" label="Developers per Team" min="1" max="7" value={this.state.project.teamsize} handleChange={this.handleChange} />
-                <FormRowSlider id="teamcount" label="Number of Teams" min="1" max="7" value={this.state.project.teamcount} handleChange={this.handleChange} />
-                <FormRowSlider id="efficiency" label="Efficiency" min="10" max="100" step="5" value={this.state.project.efficiency} handleChange={this.handleChange} />
-                
-                <FormRowTextArea type="textarea" id="projects" label="Projects" value={this.state.project.projects} handleChange={this.handleChange} />
-
-                <FormRowOptions type="radio" id="important" label="View Only Important tasks" value={this.state.project.important} handleChange={this.handleChange} />
-                <div>
-                <button type="button" className={((this.state.activeProject) ? "btn btn-primary mr-2" : "d-none")} onClick={this.handleSave}>Save {this.state.activeProject}</button>
-                <button type="button" className="btn btn-outline-primary" onClick={this.handleSaveAs}>{this.state.activeProject ? "Save a copy..." : "Save"}</button>
-                </div>
-                <hr />
-               
-                
-                
-            </form>
+            <TeamSliderForm project={this.state.project} activeProject={this.state.activeProject} handleSave={this.handleSave} handleChange={this.handleChange} />
             <h1>Output</h1>
 
            
