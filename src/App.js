@@ -4,7 +4,7 @@ import {PeopleProject} from './views/PeopleProject/PeopleProject';
 import {Project} from './views/ProjectDetails/Project';
 import ls from 'local-storage';
 import {Defaults} from './defaults/DefaultProjects';
-class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,5 +81,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
