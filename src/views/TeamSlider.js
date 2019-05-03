@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import { FormColapsedTextArea } from "./FormElements/FormRowTextArea";
-import { FormRowInput } from "./FormElements/FormRowInput";
+import { FormRowSlider } from "./FormElements/FormRowSlider";
+import { FormRowOptions } from "./FormElements/FormRowOptions";
+import { FormRowTextArea } from "./FormElements/FormRowTextArea";
 import { TeamCost } from '../logic/TeamCost';
+
 import { TeamDelivery } from '../logic/TeamDelivery';
 import { ProjectParser } from "../logic/ProjectParser";
 import { Defaults } from '../defaults/DefaultTeamSlider';
 import { TabSet } from './SaveArea/SaveArea';
-import { TeamSliderForm } from './TeamSlider/TeamSliderForm'
+import { CtrlS } from './KeyEvents/CtrlS';
 import ls from 'local-storage';
 
 export class TeamSlider extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            project: Defaults.GetState(),
+            ...Defaults.GetState(),
             activeProject: "",
             projectNames: [],
             ...this.getState()
@@ -24,16 +27,16 @@ export class TeamSlider extends Component {
             return {name: v.name}
         });
     }
+   
     getState(name) {
         console.log("GetSTate", name);
         let allProjects = ls.get('TeamSliderState'),
             myState = { 
-                project: {},
                 activeProject: "",
                 projectNames: []
             };
         if(!allProjects || !allProjects.length) {
-            myState.project = Defaults.GetState();
+            myState = {...myState, ...Defaults.GetState()};
         } else {
             let temp;
             if(name) {
@@ -43,10 +46,20 @@ export class TeamSlider extends Component {
                 temp = allProjects[0];
             }
             myState.projectNames = this.mapTabState(allProjects);
-            myState.project = temp.value;
+            myState = {...myState, ...temp.value};
             myState.activeProject = temp.name;
         }
         return myState;
+    }
+    justProject(state) {
+        return {
+            teamsize: state.teamsize,
+            teamcount: state.teamcount,
+            cost: state.cost,
+            projects: state.projects,
+            efficiency: state.efficiency,
+            important: state.important
+        }
     }
     saveState(saveName) {
         console.log("Save name", saveName)
@@ -60,7 +73,7 @@ export class TeamSlider extends Component {
         }
         projects.unshift({
             name: saveName,
-            value: this.state.project
+            value: this.justProject(this.state)
         });
 
         ls.set('TeamSliderState', projects);
@@ -77,9 +90,9 @@ export class TeamSlider extends Component {
         return arr.filter(v => justImportant ? v.important : true).map(v => v.name).join("\n")
     }
     handleChange = (e,v) => {
-        
+        console.log("CHANGE", e, v);
         this.setState((state, props) => {
-            let tempProject = { ...state.project, [e]:v}
+            let tempProject = { ...state, [e]:v}
             const calc = new TeamCost(10000, 5000);
             const cost = calc.calculate(tempProject.teamsize, tempProject.teamcount);
             
@@ -94,7 +107,7 @@ export class TeamSlider extends Component {
             const later = data.later.tasks.map(v => v.name).join("\n");
             const never = data.never.tasks.map(v => v.name).join("\n");
            
-            const tempState = { ...state, project: tempProject, cost, now, next, soon, later, never};
+            const tempState = { ...tempProject, cost, now, next, soon, later, never};
             return tempState;
         });
 
@@ -105,18 +118,20 @@ export class TeamSlider extends Component {
         this.saveState(file);
     }
     handleSave = (e,v) => {
-        this.saveState(this.state.activeProject);
-        /*const calc = new TeamCost(10000, 5000);
-        const output = calc.calculate(this.state.teamsize, this.state.teamcount);
-        this.setState({cost: output}); */
+        if(this.state.activeProject) {
+            this.saveState(this.state.activeProject);
+        } else {
+            this.handleSaveAs();
+        }
     }
     handleChangeTab = (e) =>{
         const saveableSTate = this.getState(e);
         console.log("Loading ", e, saveableSTate);
 
-        this.setState((state, props) => {
-            return { state, ...saveableSTate}
+        this.setState({
+            ...this.getState(e)
         });
+        this.handleChange();
     }
     render() {
         
@@ -128,16 +143,26 @@ export class TeamSlider extends Component {
         <div className="App">
           <header className="App-header">
             <TabSet tabs={this.state.projectNames} activeTab={this.state.activeProject} handleChangeTab={this.handleChangeTab} />
+            <CtrlS handleSave={this.handleSave} />
           </header>
-          <main>
-            <TeamSliderForm project={this.state.project} activeProject={this.state.activeProject} handleSaveAs={this.handleSaveAs} handleSave={this.handleSave} handleChange={this.handleChange} />
-            <h1>Output</h1>
+          <main className="container">
+            <form>
+                <h1>Input</h1>
+                <FormRowSlider id="teamsize" label="Developers per Team" min="1" max="7" value={this.state.teamsize} handleChange={this.handleChange} />
+                <FormRowSlider id="teamcount" label="Number of Teams" min="1" max="7" value={this.state.teamcount} handleChange={this.handleChange} />
+                <FormRowSlider id="efficiency" label="Efficiency" min="10" max="100" step="5" value={this.state.efficiency} handleChange={this.handleChange} />
+                
+                <FormRowTextArea type="textarea" id="projects" label="Projects" value={this.state.projects} handleChange={this.handleChange} />
 
-           
-
-
-            <FormRowInput type="number" step="any" id="cost" label="Monthly Cost" value={this.state.cost} />
-           
+                <FormRowOptions type="radio" id="important" label="View Only Important tasks" value={this.state.important} handleChange={this.handleChange} />
+                <div>
+                <button type="button" className={((this.state.activeProject) ? "btn btn-primary mr-2" : "d-none")} onClick={this.handleSave}>Save {this.state.activeProject}</button>
+                <button type="button" className="btn btn-outline-primary" onClick={this.handleSaveAs}>{this.state.activeProject ? "Save a copy..." : "Save"}</button>
+                </div>
+                <hr />
+            </form>
+           <h1>Output</h1> 
+           <FormRowTextArea type="textarea" id="projects" label="Cost (per month)" value={this.state.cost} handleChange={this.handleChange} />
             <div className="row">
                 <div className="col-sm">
                     <FormColapsedTextArea type="textarea" id="week" label="Now (1 week)" readonly={true} value={this.state.now} />

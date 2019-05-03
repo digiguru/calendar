@@ -12,9 +12,7 @@ export class TabSet extends Component {
         e.preventDefault();
         const tabName = e.currentTarget.innerText;
         this.setState({activeTab: tabName});
-        console.log("HELLO", tabName);
         this.props.handleChangeTab(tabName);
-
     };
     render() {
         return (
@@ -22,7 +20,7 @@ export class TabSet extends Component {
             {this.props.tabs.map((tab, index) => {
                 return (
                     <li className="nav-item" key={tab.name + "-" + index}>
-                        <a className={this.state.activeTab === tab.name ? "nav-link active" : "nav-link"} href="#" onClick={this.handleClick}>{tab.name}</a>
+                        <button type="button" className={this.state.activeTab === tab.name ? "nav-link active" : "nav-link"} onClick={this.handleClick}>{tab.name}</button>
                     </li>
                 );
             })}
