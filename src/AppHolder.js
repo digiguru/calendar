@@ -10,7 +10,7 @@ export function AppHolder() {
         <div className="pos-f-t">
         <nav className="navbar navbar-dark bg-dark">
             <div className="navbar-nav mr-auto mt-2 mt-lg-0">
-            <span c>
+            <span>
              <Link className="btn btn-secondary" to="/TeamSlider">TeamSlider</Link>
             </span>
             <span className="nav-item">
