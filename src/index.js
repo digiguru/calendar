@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 //import App from './App';
 //import {TeamSlider} from './views/TeamSlider';
-import { AppHolder } from './AppHolder';
+import { AppHolder } from './AppHolder_basic';
 
 import * as serviceWorker from './serviceWorker';
 

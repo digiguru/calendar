@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import './App.css';
-import {PeopleProject} from './views/PeopleProject/PeopleProject';
-import {Project} from './views/ProjectDetails/Project';
+import {PeopleProject} from './PeopleProject/PeopleProject';
+import {Project} from './ProjectDetails/Project';
 import ls from 'local-storage';
-import {Defaults} from './defaults/DefaultProjects';
-export class App extends Component {
+import {Defaults} from '../defaults/DefaultProjects';
+export class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
