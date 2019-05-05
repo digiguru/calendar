@@ -8,7 +8,8 @@ import { TeamCost } from '../logic/TeamCost';
 import { TeamDelivery } from '../logic/TeamDelivery';
 import { ProjectParser } from "../logic/ProjectParser";
 import { Defaults } from '../defaults/DefaultTeamSlider';
-import { TabSet } from './SaveArea/SaveArea';
+//import { TabSet } from './SaveArea/SaveArea';
+import { TabArea } from './SaveArea/TabArea';
 import { CtrlS } from './KeyEvents/CtrlS';
 import ls from 'local-storage';
 
@@ -18,6 +19,7 @@ export class TeamSlider extends Component {
         this.state = { 
             ...Defaults.GetState(),
             activeProject: "",
+            activeProjectIndex: 0,
             projectNames: [],
             ...this.getState()
         }
@@ -32,14 +34,16 @@ export class TeamSlider extends Component {
         let allProjects = ls.get('TeamSliderState'),
             myState = { 
                 activeProject: "",
+                activeProjectIndex: 0,
                 projectNames: []
             };
         if(!allProjects || !allProjects.length) {
             myState = {...myState, ...Defaults.GetState()};
         } else {
-            let temp;
+            let temp, tempIndex;
             if(name) {
                 temp = allProjects.find(v => v.name === name);
+                tempIndex = allProjects.findIndex(v => v.name === name);
             }
             if (!temp) {
                 temp = allProjects[0];
@@ -47,6 +51,7 @@ export class TeamSlider extends Component {
             myState.projectNames = this.mapTabState(allProjects);
             myState = {...myState, ...temp.value};
             myState.activeProject = temp.name;
+            myState.activeProjectIndex = tempIndex;
         }
         return myState;
     }
@@ -76,7 +81,7 @@ export class TeamSlider extends Component {
         });
 
         ls.set('TeamSliderState', projects);
-        this.setState({projectNames:this.mapTabState(projects), activeProject:saveName});
+        this.setState({projectNames:this.mapTabState(projects), activeProject:saveName, activeIndex: 0});
     }
 
     componentDidMount() {
@@ -123,12 +128,13 @@ export class TeamSlider extends Component {
             this.handleSaveAs();
         }
     }
-    handleChangeTab = (e) =>{
-        const saveableSTate = this.getState(e);
-        console.log("Loading ", e, saveableSTate);
+    handleChangeTab = (value, tabIndex) =>{
+        console.log("handleChangeTab", value, tabIndex, this.state);
+        const tabName = this.state.projectNames[tabIndex].name;
+        const saveableSTate = this.getState(tabName);
 
         this.setState({
-            ...this.getState(e)
+            ...saveableSTate
         });
         this.handleChange();
     }
@@ -141,7 +147,7 @@ export class TeamSlider extends Component {
 
         <div className="App">
           <header className="App-header">
-            <TabSet tabs={this.state.projectNames} activeTab={this.state.activeProject} handleChangeTab={this.handleChangeTab} />
+            <TabArea tabs={this.state.projectNames} activeTab={this.state.activeProject} activeIndex={this.state.activeProjectIndex} handleChangeTab={(value, index) => this.handleChangeTab(value, index)} />
             <CtrlS handleSave={this.handleSave} />
           </header>
           <main className="container">

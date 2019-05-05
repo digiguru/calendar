@@ -8,11 +8,12 @@ export class TabSet extends Component {
             //tabs: props.tabs
         }
     }
-    handleClick = (e) => {
+    handleClick = (e, i) => {
         e.preventDefault();
         const tabName = e.currentTarget.innerText;
+        const tabIndex = v;
         this.setState({activeTab: tabName});
-        this.props.handleChangeTab(tabName);
+        this.props.handleChangeTab(tabName, i);
     };
     render() {
         return (
