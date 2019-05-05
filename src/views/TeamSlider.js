@@ -141,7 +141,7 @@ export class TeamSlider extends Component {
     render() {
         
         
-        
+        console.log("RENDER", this.state.teamsize, this.state.teamcount, this.state.efficiency);
         return (
         <React.Fragment>
 
@@ -153,9 +153,9 @@ export class TeamSlider extends Component {
           <main className="container">
             <form>
                 <h1>Input</h1>
-                <FormRowSlider id="teamsize" label="Developers per Team" min="1" max="7" value={this.state.teamsize} handleChange={this.handleChange} />
-                <FormRowSlider id="teamcount" label="Number of Teams" min="1" max="7" value={this.state.teamcount} handleChange={this.handleChange} />
-                <FormRowSlider id="efficiency" label="Efficiency" min="10" max="100" step="5" value={this.state.efficiency} handleChange={this.handleChange} />
+                <FormRowSlider id="teamsize" label="Developers per Team" min={1} max={7} step={1} value={this.state.teamsize} handleChange={this.handleChange} />
+                <FormRowSlider id="teamcount" label="Number of Teams" min={1} max={7} step={1} value={this.state.teamcount} handleChange={this.handleChange} />
+                <FormRowSlider id="efficiency" label="Efficiency" min={10} max={100} step={5} value={this.state.efficiency} handleChange={this.handleChange} />
                 
                 <FormRowTextArea type="textarea" id="projects" label="Projects" value={this.state.projects} handleChange={this.handleChange} />
 
