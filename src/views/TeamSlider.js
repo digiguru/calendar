@@ -29,7 +29,6 @@ export class TeamSlider extends Component {
     }
    
     getState(name) {
-        console.log("GetSTate", name);
         let allProjects = ls.get('TeamSliderState'),
             myState = { 
                 activeProject: "",
