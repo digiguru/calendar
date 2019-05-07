@@ -1,4 +1,4 @@
-import {Resource} from './users';
+import {Resource} from './Users';
 
 describe('The Users', () => {
     it('Can be created with a name and a capacity', () => {
