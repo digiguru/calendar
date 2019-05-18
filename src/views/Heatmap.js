@@ -16,14 +16,14 @@ const styles = theme => ({
   },
 });
 const styleContainer = (columns, rows) => {
-  const colText = Array(columns).fill("[column] 1fr").join(" ");
-  const rowText = Array(rows).fill("[row] 1fr").join(" ");
+  const colText = Array(columns).fill("[column] 2fr").join(" ");
+  const rowText = Array(rows).fill("[row] 2fr").join(" ");
   return {
     display: 'grid',
     border: '1px',
-    gridTemplateColumns: `[first] 400px ${colText}`,
-    gridTemplateRows: `[first] 60px ${rowText}`,
-    gridAutoFlow: "column" 
+    gridTemplateColumns: `[first] 400px ${colText} [last] 1fr`,
+    gridTemplateRows: `[first] 1fr ${rowText} [last] 1fr`,
+    gridAutoFlow: "column"
   }
 //    gridTemplateColumns: `[first] 40px repeat(${columns}, 1fr [column])`
 
@@ -31,9 +31,23 @@ const styleContainer = (columns, rows) => {
 const styleCell = (column, row) => {
   return {
     gridColumn: column,
-    gridRow: row,    
+    gridRow: row,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   }
 }
+const styleCentered = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center"
+}
+const styleCenteredRight = {
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center"
+}
+
 const styleGreen = {
     border: "1px green solid"
   };
@@ -81,41 +95,23 @@ function Heatmap(props) {
   return (
     <div style={styleContainer(areas.length, domains.length)}>
     
-        <Paper style={styleCell(1,1)} className={classes.paper}>Domains</Paper>
-    
+    {/* <Paper style={styleCell(1,1)} className={classes.paper}>Domains</Paper> */}
     
       {domains.map((item, index) => (
-        
-          <Paper key={"domain" + index} style={styleCell(1,index+2)} className={classes.paper}>{item}</Paper>
-        
+        <Paper key={"domain" + index} style={ {...styleCell(1,index+2), ...styleCenteredRight}} className={classes.paper}>{item}</Paper>
       ))}
+      <Paper style={styleCell(1,domains.length+2)} className={classes.paper}><input type='text' placeholder="add domain" /></Paper>
       {areas.map((area, areaIndex) => (
           <React.Fragment key={"area" + areaIndex}>
               <Paper style={styleCell(areaIndex+2,1)}  className={classes.paper}>{area}</Paper>
             {cells[areaIndex].map(({value, rating}, indexCell) => (
-              <Paper key={"cell" + areaIndex + "-" + indexCell} style={ {...styleCell(areaIndex+2,indexCell+2), ...getRatingStyle(rating) }} className={classes.paper}>{value}</Paper>
-              
+              <Paper key={"cell" + areaIndex + "-" + indexCell} style={ {...styleCell(areaIndex+2,indexCell+2), ...getRatingStyle(rating), ...styleCentered }} className={classes.paper}>{value}</Paper>
             ))}
-            </React.Fragment>
+          </React.Fragment>
       ))}
-        
-  
+      <Paper style={styleCell(areas.length+2,1)} className={classes.paper}><input type='text' placeholder="add area" /></Paper>
     </div>
   );
-  /*
-  {rawData.map(({domain, data}, index) => (
-          <Grid container  spacing={3}>>
-            <Grid item>
-              <Paper className={classes.paper}>{domain}</Paper>
-            </Grid>
-            {data.map((cell, indexCell) => (
-              <Grid item>
-                <Paper className={classes.paper}>{cell}</Paper>
-              </Grid>
-            ))}
-            </Grid>
-          ))}
-  */
 }
 
 Heatmap.propTypes = {
