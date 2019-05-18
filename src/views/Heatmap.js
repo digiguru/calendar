@@ -25,8 +25,6 @@ const styleContainer = (columns, rows) => {
     gridTemplateRows: `[first] 1fr ${rowText} [last] 1fr`,
     gridAutoFlow: "column"
   }
-//    gridTemplateColumns: `[first] 40px repeat(${columns}, 1fr [column])`
-
 };
 const styleCell = (column, row) => {
   return {
@@ -60,38 +58,8 @@ const styleRed = {
   const getRatingStyle = (rating) => {
     return rating > 66 ? styleGreen : (rating < 34 ? styleRed : styleYellow);
   }
-  
 function Heatmap(props) {
-  const { classes } = props;
-  
-  const rawData = [
-    {area:"Spain", data: [
-      {domain:"Cost", value: "£", rating:100},
-      {domain:"Distance", value: 1000, rating: 60},
-      {domain:"Language", value: "Spanish", rating: 50}
-    ]},
-    {area:"Thailand", data: [
-      {domain:"Cost", value: "£££", rating:10},
-      {domain:"Distance", value: 5855, rating: 10},
-      {domain:"Language", value: "Thai", rating: 10}
-    ]},
-    {area:"Wales", data: [
-      {domain:"Cost", value: "£", rating:100},
-      {domain:"Distance", value: 187, rating: 80},
-      {domain:"Language", value: "Spanish", rating: 50}
-    ]}
-  ];
-
-  const domains = rawData[0].data.map(x => x.domain);
-  
-  const areas = rawData.map(x => x.area);
-  const cells = [];
-  areas.forEach((area, areaIndex) => {
-    const g = rawData[areaIndex].data;
-    const h = g.map(x => ({rating: x.rating, value: x.value}));
-    cells.push(h);
-  });
-  console.log(cells);
+  const { classes, areas, domains, cells } = props;
   return (
     <div style={styleContainer(areas.length, domains.length)}>
     
@@ -100,7 +68,7 @@ function Heatmap(props) {
       {domains.map((item, index) => (
         <Paper key={"domain" + index} style={ {...styleCell(1,index+2), ...styleCenteredRight}} className={classes.paper}>{item}</Paper>
       ))}
-      <Paper style={styleCell(1,domains.length+2)} className={classes.paper}><input type='text' placeholder="add domain" /></Paper>
+      <Paper style={styleCell(1,domains.length+2)} className={classes.paper}><input type='text' placeholder="add domain" onClick={(event) => props.onAddDomain(event.currentTarget.placeholder)} /></Paper>
       {areas.map((area, areaIndex) => (
           <React.Fragment key={"area" + areaIndex}>
               <Paper style={styleCell(areaIndex+2,1)}  className={classes.paper}>{area}</Paper>
@@ -109,7 +77,7 @@ function Heatmap(props) {
             ))}
           </React.Fragment>
       ))}
-      <Paper style={styleCell(areas.length+2,1)} className={classes.paper}><input type='text' placeholder="add area" /></Paper>
+      <Paper style={styleCell(areas.length+2,1)} className={classes.paper}><input type='text' placeholder="add area" onClick={(event) => props.onAddArea(event.currentTarget.placeholder)} /></Paper>
     </div>
   );
 }

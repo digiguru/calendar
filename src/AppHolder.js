@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { MainMenu } from "./views/MainMenu";
 import { TeamSlider } from "./views/TeamSlider";
 import { Calendar } from "./views/Calendar";
-import Heatmap from "./views/Heatmap";
+import { HeatmapContainer } from "./views/HeatmapContainer";
 export class AppHolder extends Component {
   render() {
     return (
@@ -15,6 +15,6 @@ AppHolder.defaultProps = {
   menuItems: [
     { name: "Team Slider", path: "/TeamSlider", component: TeamSlider },
     { name: "Calendar", path: "/Calendar", component: Calendar },
-    { name: "Heatmap", path: "/Heatmap", component: Heatmap}
+    { name: "Heatmap", path: "/Heatmap", component: HeatmapContainer}
   ]
 }
