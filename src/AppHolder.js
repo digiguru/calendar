@@ -29,10 +29,9 @@ export class AppHolder extends Component {
 
         </div> 
 
-
           <Route exact path="/slider" component={TeamSlider} />
           <Route path="/settings" component={App} />
-          <Route path="/" component={About} />
+          <Route exact path="/" component={About} />
         </div>
       </Router>
     );
