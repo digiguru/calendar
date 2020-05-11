@@ -13,8 +13,7 @@ export class AppHolder extends Component {
         <div>
           <div className="pos-f-t">
           <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          
-            <ul class="navbar-nav"> 
+            <ul className="navbar-nav"> 
                 <NavLink activeClassName="selected" className="nav-item nav-link" to="/">
                 About
                 </NavLink>
