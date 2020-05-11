@@ -1,30 +1,42 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React, {Component} from "react";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import { TeamSlider } from "./views/TeamSlider";
 import { App } from "./App";
+import { About } from './About';
 
-export function AppHolder() {
-  return (
-    <Router>
-      <div>
-        <div className="pos-f-t">
-        <nav className="navbar navbar-dark bg-dark">
-            <div className="navbar-nav mr-auto mt-2 mt-lg-0">
-            <span>
-             <Link className="btn btn-secondary" to="/TeamSlider">TeamSlider</Link>
-            </span>
-            <span className="nav-item">
-             <Link className="btn btn-secondary" to="/about">About</Link>
-            </span>
-            </div>
-        </nav>
+export class AppHolder extends Component {
+  render() {
+    const location = this.props.location;
+    console.log(location)
+    return (
+      <Router>
+        <div>
+          <div className="pos-f-t">
+          <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+          
+            <ul class="navbar-nav"> 
+                <NavLink activeClassName="selected" className="nav-item nav-link" to="/">
+                About
+                </NavLink>
+                <NavLink activeClassName="selected" className="nav-item nav-link" to="/slider">Slider</NavLink>
+                <NavLink activeClassName="selected" className="nav-item nav-link" to="/settings">Settings</NavLink>
+              
+            </ul>
+          
+              
+              
+              
+          </nav>
 
-      </div> 
+        </div> 
 
 
-        <Route exact path="/TeamSlider" component={TeamSlider} />
-        <Route path="/about" component={App} />
-      </div>
-    </Router>
-  );
+          <Route exact path="/slider" component={TeamSlider} />
+          <Route path="/settings" component={App} />
+          <Route path="/" component={About} />
+        </div>
+      </Router>
+    );
+  }
+  
 }
