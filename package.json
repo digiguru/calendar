@@ -27,7 +27,7 @@
     "outputName": "results.xml"
   },
   "devDependencies": {
-    "jest-junit": "^12.1.0"
+    "jest-junit": "^12.2.0"
   },
   "browserslist": [
     ">0.2%",
