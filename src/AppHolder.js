@@ -28,10 +28,11 @@ export class AppHolder extends Component {
           </nav>
 
         </div> 
-
-          <Route exact path="/slider" component={TeamSlider} />
-          <Route path="/settings" component={App} />
-          <Route exact path="/" component={About} />
+          <Routes>
+            <Route exact path="/slider" component={TeamSlider} />
+            <Route path="/settings" component={App} />
+            <Route exact path="/" component={About} />
+          </Routes>
         </div>
       </Router>
     );
