@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
 import { TeamSlider } from "./views/TeamSlider";
 import { App } from "./App";
 import { About } from './About';
@@ -28,10 +28,11 @@ export class AppHolder extends Component {
           </nav>
 
         </div> 
-
-          <Route exact path="/slider" component={TeamSlider} />
-          <Route path="/settings" component={App} />
-          <Route exact path="/" component={About} />
+          <Routes>
+            <Route exact path="/slider" component={TeamSlider} />
+            <Route path="/settings" component={App} />
+            <Route exact path="/" component={About} />
+          </Routes>
         </div>
       </Router>
     );
