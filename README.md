@@ -21,3 +21,12 @@ npm run test
 ## Architecture
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Next Steps
+
+[ ] Allow Monte Carlo Simulations
+[ ] Inputs
+    > Lead time / Cycle Time / Velocity
+    > Backlog / Total Scope Number
+    >
+[ ] 
