@@ -6,19 +6,19 @@ import { About } from './About';
 
 export class AppHolder extends Component {
   render() {
-    const location = this.props.location;
-    console.log(location)
+    const navLinkClassName = ({ isActive }) =>
+      `nav-item nav-link${isActive ? " selected" : ""}`;
     return (
       <Router>
         <div>
           <div className="pos-f-t">
           <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <ul className="navbar-nav"> 
-                <NavLink activeClassName="selected" className="nav-item nav-link" to="/">
+                <NavLink className={navLinkClassName} to="/">
                 About
                 </NavLink>
-                <NavLink activeClassName="selected" className="nav-item nav-link" to="/slider">Slider</NavLink>
-                <NavLink activeClassName="selected" className="nav-item nav-link" to="/settings">Settings</NavLink>
+                <NavLink className={navLinkClassName} to="/slider">Slider</NavLink>
+                <NavLink className={navLinkClassName} to="/settings">Settings</NavLink>
               
             </ul>
           
@@ -29,9 +29,9 @@ export class AppHolder extends Component {
 
         </div> 
           <Routes>
-            <Route exact path="/slider" component={TeamSlider} />
-            <Route path="/settings" component={App} />
-            <Route exact path="/" component={About} />
+            <Route path="/slider" element={<TeamSlider />} />
+            <Route path="/settings" element={<App />} />
+            <Route path="/" element={<About />} />
           </Routes>
         </div>
       </Router>
