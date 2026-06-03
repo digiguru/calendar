@@ -7,8 +7,8 @@
   },
   "dependencies": {
     "local-storage": "^2.0.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.2.4",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "react-router-dom": "^7.16.0",
     "react-scripts": "^5.0.1"
   },
@@ -27,7 +27,7 @@
     "outputName": "results.xml"
   },
   "devDependencies": {
-    "jest-junit": "^16.0.0"
+    "jest-junit": "^17.0.0"
   },
   "browserslist": [
     ">0.2%",
