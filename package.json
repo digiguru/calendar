@@ -10,7 +10,7 @@
     "@base-ui/react": "^1.7.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "react-router-dom": "^7.18.2"
+    "react-router-dom": "^7.18.3"
   },
   "scripts": {
     "dev": "vite",
@@ -23,8 +23,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@vitejs/plugin-react": "^6.1.0",
-    "eslint": "^10.9.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "eslint": "^10.9.1",
     "vite": "^8.2.2",
     "vitest": "^4.1.11"
   }
